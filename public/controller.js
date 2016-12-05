@@ -2,19 +2,19 @@ app.controller("todoController", function($scope, todoService, $http){
 
   $scope.todoArray = todoService;
 
-   $http.get('/beer').success(function(){
-    // $scope.beers = data;
-    console.log('Hi there I am the client http get function');
-  });
+  // if upon client get (read) request
+  //  $http.get('/beer').success(function(data){
+  //   // $scope.beers = data;
+  //   console.log('Hi there I am the client http get route');
+  // });
  
   $scope.addToArray = function(){
-    $scope.todoArray.push({task: $scope.inputToAddToArray, done:false});
+    var todo = {task: $scope.inputToAddToArray, done:false};
+    // $scope.todoArray.push(todo);
     $scope.inputToAddToArray = '';
 
-    $http.post('/beer').success(function () {
-      console.log('got back from the server, I am the client side post function');
-      // $scope.beers.push(response.data);
-      // console.log(response);
+    $http.post('/todos', todo).then(function (response) {
+      $scope.todoArray.push(response.data);
     });
   };
 
